@@ -1,10 +1,11 @@
+
 services:
   php:
     build:
       context: ./php # Indica onde está o arquivo Dockerfile
       dockerfile: Dockerfile
 
-    container_name: marcius-php # Apelido para o container
+    container_name: birazn-ifsp-php # Apelido para o container
     restart: always
     volumes:
       - ./web:/var/www/html/ # Irá copiar o conteúdo da pasta src para o container
@@ -20,7 +21,7 @@ services:
 
   postgres:
     image: postgres:12
-    container_name: marcius-pgsql
+    container_name: birazn-ifsp-pgsql
     restart: always
     environment:
       POSTGRES_PASSWORD: postdba
@@ -34,7 +35,7 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
-    container_name: marcius-pgadmin
+    container_name: birazn-ifsp-pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: postgres@servidor.com
       PGADMIN_DEFAULT_PASSWORD: postdba
@@ -47,7 +48,7 @@ services:
 
   mysql:
     image: mysql:5.7 # A versão 8.0 está com instabilidades
-    container_name: marcius-mysql
+    container_name: birazn-ifsp-mysql
     restart: always # Por padrão o Docker não reinicia o container, vamos mudar isso.
     volumes:
       - ./mysql:/var/lib/mysql
@@ -64,7 +65,7 @@ services:
       context: ./phpmyadmin
       dockerfile: Dockerfile
 
-    container_name: marcius-phpmyadmin
+    container_name: birazn-ifsp-phpmyadmin
     restart: always
     volumes:
       - /sessions
@@ -73,7 +74,7 @@ services:
     links:
       - mysql
     environment:
-      PMA_ARBITRARY: 0 # 1 Isso executará o phpMyAdmin com um servidor arbitrário, permitindo que você especifique o servidor MySQL/MariaDB na página de login.
+      PMA_ARBITRARY: 0 # 1 para Habilitar a opção para inserir host no login
       PMA_HOST: mysql
     networks:
       - lamp-network
@@ -95,3 +96,4 @@ volumes:
 # ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
 # ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root';
 # ALTER USER 'default'@'%' IDENTIFIED WITH mysql_native_password BY 'secret';
+#-----------------------------------------------------------------------------------------------------------------------------------------------#
